@@ -66,7 +66,7 @@ public class GetPropertyAction
      * value of that property.
      *
      * @param theProp the name of the system property.
-     * @param defaulVal the default value.
+     * @param defaultVal the default value.
      */
     public GetPropertyAction(String theProp, String defaultVal) {
         this.theProp = theProp;

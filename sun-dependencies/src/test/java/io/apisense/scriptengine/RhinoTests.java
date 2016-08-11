@@ -1,4 +1,4 @@
-package fr.inria.scriptengine.rhinoforandroid;
+package io.apisense.scriptengine;
 
 import com.sun.script.javascript.RhinoScriptEngineFactory;
 

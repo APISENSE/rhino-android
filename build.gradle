@@ -7,12 +7,76 @@ buildscript {
     }
 }
 
+// Default parameters
+if (!project.hasProperty("artifactory_contextUrl")) {
+    ext.artifactory_contextUrl = "http://repo.apisense.com/artifactory"
+}
+
+if (!project.hasProperty("artifactory_user")) {
+    ext.artifactory_user = ""
+}
+
+if (!project.hasProperty("artifactory_password")) {
+    ext.artifactory_password = ""
+}
+
 allprojects {
     repositories {
         mavenCentral()
     }
+
+    group = "io.apisense"
+    version = "1.0"
 }
 
-task clean(type: Delete) {
-    delete rootProject.buildDir
+private static String[] toRelease(String repository) {
+    def result = []
+    for (String toRelease : ["RhinoEngine"]) {
+        result.add(":publish" + toRelease + "PublicationTo" + repository + "Repository")
+    }
+    return result
+}
+
+apply plugin: 'maven-publish'
+
+subprojects { sub ->
+    task "publishSnapshot"(dependsOn: toRelease("ArtifactorySnapshot")) {
+        description = "Publish on snapshot repository"
+    }
+
+    task "publishRelease"(dependsOn: toRelease("ArtifactoryRelease")) {
+        description = "Publish on release repository"
+    }
+
+    task "publishLocal"(dependsOn: toRelease("Local")) {
+        description = "Publish plugin on a temporary repository (i.e. '/tmp/sdkRepo')"
+    }
+
+    publishing {
+        repositories {
+            maven {
+                maven {
+                    name = 'Local'
+                    url = "/tmp/sdkRepo"
+                }
+                maven {
+                    name = 'ArtifactoryRelease'
+                    credentials {
+                        username = "${artifactory_user}"
+                        password = "${artifactory_password}"
+                    }
+                    url = "${artifactory_contextUrl}/apisense-release"
+
+                }
+                maven {
+                    name = 'ArtifactorySnapshot'
+                    credentials {
+                        username = "${artifactory_user}"
+                        password = "${artifactory_password}"
+                    }
+                    url = "${artifactory_contextUrl}/apisense-snapshot"
+                }
+            }
+        }
+    }
 }

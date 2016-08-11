@@ -1,5 +1,8 @@
 apply plugin: 'java'
 
+sourceCompatibility = JavaVersion.VERSION_1_7
+targetCompatibility = JavaVersion.VERSION_1_7
+
 dependencies {
     testCompile 'junit:junit:4.12'
 
@@ -7,4 +10,16 @@ dependencies {
     compile 'com.sun.phobos:jsr223-api:1.0'
     // Rhino engine implementation by Mozilla
     compile 'org.mozilla:rhino:1.7.7.1'
+}
+
+publishing {
+    publications {
+        rhinoEngine(MavenPublication) {
+            groupId group
+            artifactId 'rhino-android'
+            version version
+
+            from components.java
+        }
+    }
 }
