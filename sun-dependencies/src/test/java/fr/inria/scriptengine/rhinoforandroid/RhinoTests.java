@@ -34,16 +34,14 @@ public class RhinoTests {
 
     @Test
     public void RhinoCanBeRetrievedByEngineName() throws Exception {
-        ScriptEngine rhino = scriptEngineManager.getEngineByName("Mozilla Rhino");
+        ScriptEngine rhino = scriptEngineManager.getEngineByName("mozilla.rhino");
 
         testEngine(rhino);
     }
 
     @Test
-    public void RhinoCanBeRetrievedByLanguageName() throws Exception {
-        ScriptEngine rhino = scriptEngineManager.getEngineByName("JavaScript");
-        assertThat("We use rhino",
-                rhino.getFactory().getEngineName().toLowerCase().contains("rhino"), is(true));
+    public void RhinoCanBeRetrievedByShortName() throws Exception {
+        ScriptEngine rhino = scriptEngineManager.getEngineByName("rhino");
 
         testEngine(rhino);
     }
