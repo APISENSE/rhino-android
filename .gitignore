@@ -1,0 +1,12 @@
+# Intellij
+*.iml
+.idea
+
+# Build
+.gradle
+/local.properties
+/build
+/captures
+
+# OS Specific
+.DS_Store

@@ -1,0 +1,27 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 24
+    buildToolsVersion "24.0.0"
+
+    defaultConfig {
+        minSdkVersion 10
+        targetSdkVersion 24
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+
+    // JSR 223 (javax.script package)
+    compile 'com.sun.phobos:jsr223-api:1.0'
+    // Rhino engine implementation by Mozilla
+    compile 'org.mozilla:rhino:1.7.7.1'
+}
