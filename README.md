@@ -9,12 +9,6 @@ The script engine source code is imported from openjdk implementation, version _
 Add the following repository and dependency to your `build.gradle`:
 
 ```
-repositories {
-    maven {
-        url 'http://repo.apisense.com/apisense'
-    }
-}
-
 dependencies {
     compile 'io.apisense:rhino-android:1.0'
 }

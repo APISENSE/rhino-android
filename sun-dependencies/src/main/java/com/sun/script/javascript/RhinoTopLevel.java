@@ -140,6 +140,7 @@ public final class RhinoTopLevel extends ImporterTopLevel {
      * of a Java synchronized method) from an existing function. The
      * new function synchronizes on the <code>this</code> object of
      * its invocation.
+     * {@code
      * js> var o = { f : sync(function(x) {
      *       print("entry");
      *       Packages.java.lang.Thread.sleep(x*1000);
@@ -152,6 +153,7 @@ public final class RhinoTopLevel extends ImporterTopLevel {
      * exit
      * entry
      * exit
+     * }
      */
     public static Object sync(Context cx, Scriptable thisObj, Object[] args,
             Function funObj) {

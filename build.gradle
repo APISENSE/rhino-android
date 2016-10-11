@@ -8,22 +8,41 @@ buildscript {
 }
 
 // Default parameters
-if (!project.hasProperty("artifactory_contextUrl")) {
-    ext.artifactory_contextUrl = "http://repo.apisense.com/artifactory"
+if (!project.hasProperty("nexusUrl")) {
+    ext.nexusUrl = "file:///tmp/sdkRepo"
 }
 
-if (!project.hasProperty("artifactory_user")) {
-    ext.artifactory_user = ""
+if (!project.hasProperty("nexusUsername")) {
+    ext.nexusUsername = ""
 }
 
-if (!project.hasProperty("artifactory_password")) {
-    ext.artifactory_password = ""
+if (!project.hasProperty("nexusPassword")) {
+    ext.nexusPassword = ""
 }
+
+ext.nexusRelease = "${nexusUrl}/service/local/staging/deploy/maven2/"
+ext.nexusSnapshot = "${nexusUrl}/content/repositories/snapshots/"
+
+ext.commonLicense = {
+    name 'The GNU General Public License (GPL)'
+    url 'https://www.gnu.org/licenses/gpl-2.0.txt'
+}
+
+ext.devs = [
+        {
+            id 'aveuiller'
+            name 'Antoine Veuiller'
+            email 'aveuiller@gmail.com'
+        }
+]
 
 allprojects {
     repositories {
         mavenCentral()
     }
+
+    apply plugin: 'maven'
+    apply plugin: 'signing'
 
     group = "io.apisense"
     version = "1.1-SNAPSHOT"
@@ -37,46 +56,3 @@ private static String[] toRelease(String repository) {
     return result
 }
 
-apply plugin: 'maven-publish'
-
-subprojects { sub ->
-    task "publishSnapshot"(dependsOn: toRelease("ArtifactorySnapshot")) {
-        description = "Publish on snapshot repository"
-    }
-
-    task "publishRelease"(dependsOn: toRelease("ArtifactoryRelease")) {
-        description = "Publish on release repository"
-    }
-
-    task "publishLocal"(dependsOn: toRelease("Local")) {
-        description = "Publish plugin on a temporary repository (i.e. '/tmp/sdkRepo')"
-    }
-
-    publishing {
-        repositories {
-            maven {
-                maven {
-                    name = 'Local'
-                    url = "/tmp/sdkRepo"
-                }
-                maven {
-                    name = 'ArtifactoryRelease'
-                    credentials {
-                        username = "${artifactory_user}"
-                        password = "${artifactory_password}"
-                    }
-                    url = "${artifactory_contextUrl}/apisense-release"
-
-                }
-                maven {
-                    name = 'ArtifactorySnapshot'
-                    credentials {
-                        username = "${artifactory_user}"
-                        password = "${artifactory_password}"
-                    }
-                    url = "${artifactory_contextUrl}/apisense-snapshot"
-                }
-            }
-        }
-    }
-}
