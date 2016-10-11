@@ -12,14 +12,51 @@ dependencies {
     compile 'org.mozilla:rhino:1.7.7.1'
 }
 
-publishing {
-    publications {
-        rhinoEngine(MavenPublication) {
-            groupId group
-            artifactId 'rhino-android'
-            version version
+task javadocJar(type: Jar) {
+    classifier = 'javadoc'
+    from javadoc
+}
 
-            from components.java
+task sourcesJar(type: Jar) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives javadocJar, sourcesJar
+}
+
+uploadArchives {
+    repositories.mavenDeployer {
+        beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+
+        repository(url: nexusRelease) {
+            authentication(userName: nexusUsername, password: nexusPassword)
+        }
+
+        snapshotRepository(url: nexusSnapshot) {
+            authentication(userName: nexusUsername, password: nexusPassword)
+        }
+
+        pom.project {
+            name 'Rhino for Android'
+            artifactId 'rhino-android'
+            packaging 'jar'
+            description 'Give access to RhinoScriptEngine from the JSR223 interfaces on Android JRE.'
+            url 'https://apisense.io'
+
+            scm {
+                connection 'scm:git:https://github.com/APISENSE/rhino-android.git'
+                developerConnection 'scm:git:https://github.com/APISENSE/rhino-android'
+                url 'https://github.com/APISENSE/rhino-android'
+            }
+
+            licenses {
+                license commonLicense
+            }
+            developers {
+                devs.collect({ developer it })
+            }
         }
     }
 }
