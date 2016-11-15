@@ -43,6 +43,9 @@ allprojects {
 
     apply plugin: 'maven'
     apply plugin: 'signing'
+    signing {
+        sign configurations.archives
+    }
 
     group = "io.apisense"
     version = "1.1-SNAPSHOT"
