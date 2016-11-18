@@ -22,33 +22,11 @@ ext.devs = [
         }
 ]
 
-private boolean signingConfigured() {
-    return project.hasProperty("signing.keyId") && project.hasProperty("signing.password") \
-     && project.hasProperty("signing.secretKeyRingFile")
-}
-
 allprojects {
     repositories {
         mavenCentral()
     }
 
-    apply plugin: 'maven'
-    if (signingConfigured()) {
-        apply plugin: 'signing'
-        signing {
-            sign configurations.archives
-        }
-    }
-
     group = "io.apisense"
     version = "1.1-SNAPSHOT"
 }
-
-private static String[] toRelease(String repository) {
-    def result = []
-    for (String toRelease : ["RhinoEngine"]) {
-        result.add(":publish" + toRelease + "PublicationTo" + repository + "Repository")
-    }
-    return result
-}
-

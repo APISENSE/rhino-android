@@ -28,18 +28,6 @@ artifacts {
 
 uploadArchives {
     repositories.mavenDeployer {
-        if (signingConfigured()) {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-        }
-
-        repository(url: nexusRelease) {
-            authentication(userName: nexusUsername, password: nexusPassword)
-        }
-
-        snapshotRepository(url: nexusSnapshot) {
-            authentication(userName: nexusUsername, password: nexusPassword)
-        }
-
         pom.project {
             name 'Rhino for Android'
             artifactId 'rhino-android'
