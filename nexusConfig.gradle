@@ -1,0 +1,15 @@
+// Default parameters
+if (!project.hasProperty("nexusUrl")) {
+    ext.nexusUrl = "file:///tmp/sdkRepo"
+}
+
+if (!project.hasProperty("nexusUsername")) {
+    ext.nexusUsername = ""
+}
+
+if (!project.hasProperty("nexusPassword")) {
+    ext.nexusPassword = ""
+}
+
+ext.nexusRelease = "${nexusUrl}/service/local/staging/deploy/maven2/"
+ext.nexusSnapshot = "${nexusUrl}/content/repositories/snapshots/"

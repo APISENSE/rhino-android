@@ -7,21 +7,7 @@ buildscript {
     }
 }
 
-// Default parameters
-if (!project.hasProperty("nexusUrl")) {
-    ext.nexusUrl = "file:///tmp/sdkRepo"
-}
-
-if (!project.hasProperty("nexusUsername")) {
-    ext.nexusUsername = ""
-}
-
-if (!project.hasProperty("nexusPassword")) {
-    ext.nexusPassword = ""
-}
-
-ext.nexusRelease = "${nexusUrl}/service/local/staging/deploy/maven2/"
-ext.nexusSnapshot = "${nexusUrl}/content/repositories/snapshots/"
+apply from: 'nexusConfig.gradle'
 
 ext.commonLicense = {
     name 'The GNU General Public License (GPL)'
@@ -36,15 +22,22 @@ ext.devs = [
         }
 ]
 
+private boolean signingConfigured() {
+    return project.hasProperty("signing.keyId") && project.hasProperty("signing.password") \
+     && project.hasProperty("signing.secretKeyRingFile")
+}
+
 allprojects {
     repositories {
         mavenCentral()
     }
 
     apply plugin: 'maven'
-    apply plugin: 'signing'
-    signing {
-        sign configurations.archives
+    if (signingConfigured()) {
+        apply plugin: 'signing'
+        signing {
+            sign configurations.archives
+        }
     }
 
     group = "io.apisense"
