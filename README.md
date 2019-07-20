@@ -26,3 +26,10 @@ You can now call the Rhino script engine by using the jsr223, i.e.:
 ```
 ScriptEngine engine = new ScriptEngineManager().getEngineByName("rhino");
 ```
+
+## Configuration
+
+The `ScriptEngine` feature relies on reflection to instanciate the engines. 
+This will cause trouble while shrinking your code using Proguard or R8.
+
+To ease the integration of `rhino-android` in your project, you can find a sample project with up-to-date configuration for minification here: https://github.com/aveuiller/RhinoSampleApp
