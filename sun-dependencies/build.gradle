@@ -9,7 +9,7 @@ dependencies {
     // JSR 223 (javax.script package)
     compile 'com.sun.phobos:jsr223-api:1.0'
     // Rhino engine implementation by Mozilla
-    compile 'org.mozilla:rhino:1.7.10'
+    compile 'org.mozilla:rhino:1.7.14'
 }
 
 task javadocJar(type: Jar) {

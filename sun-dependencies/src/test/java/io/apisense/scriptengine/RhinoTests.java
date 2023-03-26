@@ -53,4 +53,11 @@ public class RhinoTests {
         assertThat("Injected engine is usable", (Double) rhino.eval("2.5+2"), is(4.5));
     }
 
+    @Test
+    public void testMathMethods() throws ScriptException {
+        ScriptEngine rhino = scriptEngineManager.getEngineByName("rhino");
+        testEngine(rhino);
+        assertThat("We can access Math.asinh", (Double) rhino.eval("Math.asinh(0);"), is(0.0));
+    }
+
 }
