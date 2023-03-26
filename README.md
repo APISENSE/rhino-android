@@ -15,7 +15,7 @@ Add the following repository and dependency to your `build.gradle`:
 
 ```
 dependencies {
-    compile 'io.apisense:rhino-android:1.1.1'
+    compile 'io.apisense:rhino-android:1.2.0'
 }
 ```
 
