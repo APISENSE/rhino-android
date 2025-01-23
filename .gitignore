@@ -4,6 +4,7 @@
 
 # Build
 .gradle
+/gradle.properties
 /local.properties
 /build
 /captures
