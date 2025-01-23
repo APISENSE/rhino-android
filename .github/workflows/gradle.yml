@@ -27,13 +27,10 @@ jobs:
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@af1da67850ed9a4cedd57bfd976089dd991e2582 # v4.0.0
     - name: setup push config
-      env:
-        USERNAME: ${{ secrets.NEXUSUSERNAME }}
-        PASSWORD: ${{ secrets.NEXUSPASSWORD }}
-        URL: ${{ vars.NEXUSURL }}
       run: |
-        echo "nexusUrl=$URL" > local.properties
-        echo "nexusUsername=$USERNAME" >> local.properties
-        echo "nexusPassword=$PASSWORD" >> local.properties
+        echo "nexusUrl=${{ vars.NEXUSURL }}" > local.properties
+        echo "nexusUsername=${{ secrets.NEXUSUSERNAME }}" >> local.properties
+        echo "nexusPassword=${{ secrets.NEXUSPASSWORD }}" >> local.properties
+        cat local.properties
     - name: Build with Gradle Wrapper
       run: ./gradlew uploadArchive
