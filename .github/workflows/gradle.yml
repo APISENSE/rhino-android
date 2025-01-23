@@ -8,10 +8,11 @@
 name: Java CI with Gradle
 on:
   push:
-    branches: [ "master", "develop" ]
+    tags:        
+    - 'v*'
 jobs:
   build:
-    environment: dev
+    environment: maven
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -31,6 +32,5 @@ jobs:
         echo "nexusUrl=${{ vars.NEXUSURL }}" > local.properties
         echo "nexusUsername=${{ secrets.NEXUSUSERNAME }}" >> local.properties
         echo "nexusPassword=${{ secrets.NEXUSPASSWORD }}" >> local.properties
-        cat local.properties
     - name: Build with Gradle Wrapper
       run: ./gradlew uploadArchive
