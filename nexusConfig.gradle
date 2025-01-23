@@ -1,6 +1,6 @@
 Properties properties = new Properties()
-if (project.rootProject.file('local.properties').canRead()) {
-        properties.load(project.rootProject.file("local.properties").newDataInputStream())
+if (project.rootProject.file('gradle.properties').canRead()) {
+        properties.load(project.rootProject.file("gradle.properties").newDataInputStream())
 }
 
 // Default parameters
