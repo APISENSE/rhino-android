@@ -20,6 +20,7 @@ jobs:
       uses: actions/setup-java@v4
       with:
         java-version: '8'
+        distribution: 'temurin'
     # Configure Gradle for optimal use in GitHub Actions, including caching of downloaded dependencies.
     # See: https://github.com/gradle/actions/blob/main/setup-gradle/README.md
     - name: Setup Gradle
